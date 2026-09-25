@@ -34,7 +34,8 @@ src/
 │   ├── messenger.ts
 │   └── ui.ts
 ├── hooks/
-│   └── useMessenger.ts
+│   ├── useMessenger.ts
+│   └── useNotificationPolling.ts
 ├── utils/
 │   ├── errors.ts
 │   └── typeGuards.ts
@@ -115,19 +116,19 @@ src/
 - [x] Не создавать отдельную систему delivery statuses.
 - [x] Проверить отправку и ошибку отправки.
 
-## Этап 7. Polling в `useMessenger`
+## Этап 7. Polling в `useNotificationPolling`
 
-- [ ] Запускать один polling-цикл после создания чата.
-- [ ] Последовательно вызывать `receiveNotification` с `receiveTimeout=5`.
-- [ ] Обрабатывать `null`.
-- [ ] Применять ограниченный exponential backoff при ошибках.
-- [ ] Не использовать `setInterval`.
-- [ ] Управлять запросами через `AbortController`.
-- [ ] Останавливать цикл при отключении, смене credentials, смене чата и unmount.
-- [ ] Не показывать штатный abort при cleanup как пользовательскую ошибку.
-- [ ] Защитить state от обновлений устаревшим циклом минимальным решением вместе с abort/cleanup.
-- [ ] Добавлять отдельный generation id только при доказанной необходимости.
-- [ ] Проверить отсутствие параллельных polling-запросов.
+- [x] Запускать один polling-цикл после создания чата.
+- [x] Последовательно вызывать `receiveNotification` с `receiveTimeout=5`.
+- [x] Обрабатывать `null`.
+- [x] Применять ограниченный exponential backoff при ошибках.
+- [x] Не использовать `setInterval`.
+- [x] Управлять запросами через `AbortController`.
+- [x] Останавливать цикл при отключении, смене credentials, смене чата и unmount.
+- [x] Не показывать штатный abort при cleanup как пользовательскую ошибку.
+- [x] Защитить state от обновлений устаревшим циклом минимальным решением вместе с abort/cleanup.
+- [x] Добавлять отдельный generation id только при доказанной необходимости.
+- [x] Проверить отсутствие параллельных polling-запросов.
 
 ## Этап 8. Фильтрация, дедупликация и удаление
 

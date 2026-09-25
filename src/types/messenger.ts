@@ -57,3 +57,8 @@ export type MessageComposerProps = {
   onErrorClear: () => void
   onSubmit: (message: string) => Promise<boolean>
 }
+
+export type NotificationPollingOptions = {
+  chatId: string | null
+  credentials: Credentials | null
+}

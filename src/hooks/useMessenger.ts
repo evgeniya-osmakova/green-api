@@ -13,6 +13,7 @@ import {
   getCheckAccountFailureMessage,
 } from '../utils/errors'
 import { isCheckAccountFailure } from '../utils/typeGuards'
+import { useNotificationPolling } from './useNotificationPolling'
 
 const MAX_MESSAGE_LENGTH = 4096
 
@@ -26,6 +27,11 @@ export function useMessenger() {
   const [isMessageSending, setIsMessageSending] = useState(false)
   const [messageError, setMessageError] = useState<string | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
+
+  useNotificationPolling({
+    chatId: chat?.chatId ?? null,
+    credentials,
+  })
 
   useEffect(
     () => () => {
