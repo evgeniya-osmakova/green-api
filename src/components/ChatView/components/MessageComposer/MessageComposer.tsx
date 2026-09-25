@@ -101,20 +101,26 @@ export function MessageComposer({
           onCompositionEnd={handleCompositionEnd}
           onKeyDown={handleKeyDown}
         />
-        <div className={styles.messageComposer__meta} id="message-meta">
-          <p
-            aria-live="polite"
-            className={styles.messageComposer__error}
-            role={error ? 'alert' : undefined}
-          >
-            {error ?? ''}
-          </p>
-          <span className={styles.messageComposer__counter}>
-            {normalizedMessageLength}/{MAX_MESSAGE_LENGTH}
-          </span>
-        </div>
       </div>
-      <Button disabled={isSubmitting} type="submit">
+
+      <div className={styles.messageComposer__meta} id="message-meta">
+        <p
+          aria-live="polite"
+          className={styles.messageComposer__error}
+          role={error ? 'alert' : undefined}
+        >
+          {error ?? ''}
+        </p>
+        <span className={styles.messageComposer__counter}>
+          {normalizedMessageLength}/{MAX_MESSAGE_LENGTH}
+        </span>
+      </div>
+
+      <Button
+        className={styles.messageComposer__submit}
+        disabled={isSubmitting}
+        type="submit"
+      >
         {isSubmitting ? 'Отправляем…' : 'Отправить'}
       </Button>
     </form>
