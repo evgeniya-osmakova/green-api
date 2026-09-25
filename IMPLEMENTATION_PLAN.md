@@ -158,12 +158,12 @@ src/
 
 ## Этап 10. README
 
-- [ ] Описать установку и запуск.
-- [ ] Описать настройку GREEN-API Telegram.
-- [ ] Указать требования: пустой `webhookUrl` и включённый `incomingWebhook`.
-- [ ] Описать получение `apiUrl`, `idInstance` и `apiTokenInstance`.
-- [ ] Описать использование приложения.
-- [ ] Кратко описать архитектуру и lifecycle polling.
-- [ ] Описать ограничения одноканальной очереди, runtime credentials и историю.
-- [ ] Указать beta-статус Telegram API.
-- [ ] Сверить README с фактической реализацией.
+- [x] Описать установку и запуск.
+- [x] Описать настройку GREEN-API Telegram.
+- [x] Указать требования: пустой `webhookUrl` и включённый `incomingWebhook`.
+- [x] Описать получение `apiUrl`, `idInstance` и `apiTokenInstance`.
+- [x] Описать использование приложения.
+- [x] Кратко описать архитектуру и lifecycle polling.
+- [x] Описать ограничения одноканальной очереди, runtime credentials и историю.
+- [x] Указать beta-статус Telegram API.
+- [x] Сверить README с фактической реализацией.
