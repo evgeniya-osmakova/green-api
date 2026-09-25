@@ -1,4 +1,5 @@
 import styles from './App.module.css'
+import { ChatSetupForm } from './components/ChatSetupForm/ChatSetupForm'
 import { CredentialsForm } from './components/CredentialsForm/CredentialsForm'
 import { Button } from './components/ui/Button/Button'
 import { useMessenger } from './hooks/useMessenger'
@@ -10,7 +11,16 @@ const credentialsPrefill: Credentials = {
 }
 
 function App() {
-  const { credentials, connect, disconnect } = useMessenger()
+  const {
+    chat,
+    chatError,
+    credentials,
+    isChatCreating,
+    clearChatError,
+    connect,
+    createChat,
+    disconnect,
+  } = useMessenger()
 
   return (
     <main className={styles.app}>
@@ -19,8 +29,9 @@ function App() {
           <p className={styles.app__eyebrow}>Telegram</p>
           <h1 className={styles.app__title}>GREEN-API Chat</h1>
           <p className={styles.app__description}>
-            Введите данные инстанса. Они останутся только в памяти текущей
-            вкладки.
+            {credentials === null
+              ? 'Введите данные инстанса. Они останутся только в памяти текущей вкладки.'
+              : 'Найдите пользователя Telegram по номеру телефона.'}
           </p>
         </header>
 
@@ -29,12 +40,20 @@ function App() {
             initialCredentials={credentialsPrefill}
             onSubmit={connect}
           />
+        ) : chat === null ? (
+          <ChatSetupForm
+            error={chatError}
+            isSubmitting={isChatCreating}
+            onDisconnect={disconnect}
+            onErrorClear={clearChatError}
+            onSubmit={createChat}
+          />
         ) : (
           <div className={styles.app__connected}>
             <div>
-              <h2 className={styles.app__subtitle}>Credentials сохранены</h2>
+              <h2 className={styles.app__subtitle}>Чат найден</h2>
               <p className={styles.app__instance}>
-                Инстанс: {credentials.idInstance}
+                +{chat.phoneNumber}, chatId: {chat.chatId}
               </p>
             </div>
             <Button variant="secondary" onClick={disconnect}>

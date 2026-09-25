@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { FormEvent } from 'react'
+import type { SubmitEvent } from 'react'
 import type { CredentialsFormProps } from '../../types/messenger'
 import { Button } from '../ui/Button/Button'
 import { TextField } from '../ui/TextField/TextField'
@@ -14,7 +14,7 @@ export function CredentialsForm({
   )
   const [idInstance, setIdInstance] = useState(initialCredentials.idInstance)
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const credentials = {

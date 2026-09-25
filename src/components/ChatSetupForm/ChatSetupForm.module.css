@@ -1,0 +1,41 @@
+.chatSetupForm {
+  display: grid;
+  gap: 20px;
+}
+
+.chatSetupForm__title {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.chatSetupForm__description {
+  margin: 8px 0 0;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.chatSetupForm__error {
+  min-height: 1.25rem;
+  margin: -4px 0 0;
+  color: var(--color-error);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.chatSetupForm__error:not(:empty) {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--color-error-surface);
+}
+
+.chatSetupForm__actions {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 420px) {
+  .chatSetupForm__actions {
+    grid-template-columns: 1fr;
+  }
+}

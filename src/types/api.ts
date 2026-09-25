@@ -1,9 +1,21 @@
 export type ApiError =
   | { type: 'abort' }
-  | { status: number; type: 'http' | 'response' }
+  | { status: number; type: 'http' }
   | { type: 'network' }
+  | { type: 'response' }
+
+export type CheckAccountFailureResponse = {
+  data?: {
+    reason: string
+    retryAfter?: number
+    status: 'fail'
+  }
+  reason?: string
+  status: false
+}
 
 export type CheckAccountResponse =
+  | CheckAccountFailureResponse
   | {
       chatId: string
       exist: boolean
@@ -11,18 +23,8 @@ export type CheckAccountResponse =
       phoneNumber?: number
       username?: string
     }
-  | {
-      data?: {
-        reason: string
-        retryAfter?: number
-        status: 'fail'
-      }
-      reason?: string
-      status: false
-    }
 
 export type Data<T> =
-  | { status: 'loading' }
   | { error: ApiError; status: 'error' }
   | { data: T; status: 'success' }
 

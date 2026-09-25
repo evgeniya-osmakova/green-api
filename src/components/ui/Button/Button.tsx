@@ -1,8 +1,10 @@
+import classNames from 'classnames'
 import type { ButtonProps } from '../../../types/ui'
 import styles from './Button.module.css'
 
 export function Button({
   children,
+  className,
   type = 'button',
   variant = 'primary',
   ...buttonProps
@@ -15,7 +17,7 @@ export function Button({
   return (
     <button
       {...buttonProps}
-      className={`${styles.button} ${variantClass}`}
+      className={classNames(styles.button, variantClass, className)}
       type={type}
     >
       {children}

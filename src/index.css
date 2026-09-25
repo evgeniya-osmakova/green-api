@@ -4,6 +4,8 @@
   --color-border: #aab8c2;
   --color-border-hover: #748896;
   --color-border-subtle: #d8e1e8;
+  --color-error: #b42318;
+  --color-error-surface: #fef3f2;
   --color-focus: rgba(22, 138, 205, 0.22);
   --color-focus-strong: rgba(22, 138, 205, 0.35);
   --color-page: #f4f7f9;

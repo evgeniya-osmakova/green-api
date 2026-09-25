@@ -38,7 +38,6 @@ export async function request<T>(
     } catch {
       return {
         error: {
-          status: response.status,
           type: 'response',
         },
         status: 'error',
