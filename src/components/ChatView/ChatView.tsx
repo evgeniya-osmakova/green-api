@@ -5,7 +5,15 @@ import { MessageComposer } from './components/MessageComposer/MessageComposer'
 import { MessageList } from './components/MessageList/MessageList'
 import styles from './ChatView.module.css'
 
-export function ChatView({ chat, messages, onDisconnect }: ChatViewProps) {
+export function ChatView({
+  chat,
+  isMessageSending,
+  messageError,
+  messages,
+  onDisconnect,
+  onMessageErrorClear,
+  onMessageSubmit,
+}: ChatViewProps) {
   return (
     <div className={styles.chatView}>
       <ChatSidebar
@@ -19,7 +27,12 @@ export function ChatView({ chat, messages, onDisconnect }: ChatViewProps) {
       >
         <ChatHeader phoneNumber={chat.phoneNumber} />
         <MessageList messages={messages} />
-        <MessageComposer />
+        <MessageComposer
+          error={messageError}
+          isSubmitting={isMessageSending}
+          onErrorClear={onMessageErrorClear}
+          onSubmit={onMessageSubmit}
+        />
       </section>
     </div>
   )

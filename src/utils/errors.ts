@@ -8,6 +8,11 @@ export const INVALID_PHONE_NUMBER_MESSAGE =
   'Введите номер в международном формате: до 15 цифр без начального нуля.'
 export const NOT_FOUND_ERROR_MESSAGE =
   'Аккаунт Telegram с таким номером не найден или скрыт настройками приватности.'
+export const EMPTY_MESSAGE_ERROR_MESSAGE = 'Введите сообщение.'
+export const MESSAGE_TOO_LONG_ERROR_MESSAGE =
+  'Сообщение не должно быть длиннее 4096 символов.'
+export const SEND_MESSAGE_ERROR_MESSAGE =
+  'Не удалось отправить сообщение. Попробуйте ещё раз.'
 
 const INSTANCE_ERROR_MESSAGE =
   'Инстанс не авторизован. Проверьте его состояние в GREEN-API.'

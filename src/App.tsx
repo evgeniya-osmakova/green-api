@@ -17,11 +17,15 @@ function App() {
     chatError,
     credentials,
     isChatCreating,
+    isMessageSending,
+    messageError,
     messages,
     clearChatError,
+    clearMessageError,
     connect,
     createChat,
     disconnect,
+    sendMessage,
   } = useMessenger()
 
   return (
@@ -59,8 +63,12 @@ function App() {
         ) : (
           <ChatView
             chat={chat}
+            isMessageSending={isMessageSending}
+            messageError={messageError}
             messages={messages}
             onDisconnect={disconnect}
+            onMessageErrorClear={clearMessageError}
+            onMessageSubmit={sendMessage}
           />
         )}
       </section>

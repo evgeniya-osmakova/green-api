@@ -22,8 +22,12 @@ export type ChatSetupFormProps = {
 
 export type ChatViewProps = {
   chat: Chat
+  isMessageSending: boolean
+  messageError: string | null
   messages: Message[]
   onDisconnect: () => void
+  onMessageErrorClear: () => void
+  onMessageSubmit: (message: string) => Promise<boolean>
 }
 
 export type Credentials = {
@@ -45,4 +49,11 @@ export type Message = {
 
 export type MessageListProps = {
   messages: Message[]
+}
+
+export type MessageComposerProps = {
+  error: string | null
+  isSubmitting: boolean
+  onErrorClear: () => void
+  onSubmit: (message: string) => Promise<boolean>
 }
