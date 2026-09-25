@@ -1,7 +1,8 @@
+import classNames from 'classnames'
 import styles from './App.module.css'
 import { ChatSetupForm } from './components/ChatSetupForm/ChatSetupForm'
+import { ChatView } from './components/ChatView/ChatView'
 import { CredentialsForm } from './components/CredentialsForm/CredentialsForm'
-import { Button } from './components/ui/Button/Button'
 import { useMessenger } from './hooks/useMessenger'
 import type { Credentials } from './types/messenger'
 
@@ -16,6 +17,7 @@ function App() {
     chatError,
     credentials,
     isChatCreating,
+    messages,
     clearChatError,
     connect,
     createChat,
@@ -24,16 +26,22 @@ function App() {
 
   return (
     <main className={styles.app}>
-      <section className={styles.app__panel}>
-        <header className={styles.app__header}>
-          <p className={styles.app__eyebrow}>Telegram</p>
-          <h1 className={styles.app__title}>GREEN-API Chat</h1>
-          <p className={styles.app__description}>
-            {credentials === null
-              ? 'Введите данные инстанса. Они останутся только в памяти текущей вкладки.'
-              : 'Найдите пользователя Telegram по номеру телефона.'}
-          </p>
-        </header>
+      <section
+        className={classNames(styles.app__panel, {
+          [styles['app__panel--chat']]: chat !== null,
+        })}
+      >
+        {chat === null ? (
+          <header className={styles.app__header}>
+            <p className={styles.app__eyebrow}>Telegram</p>
+            <h1 className={styles.app__title}>GREEN-API Chat</h1>
+            <p className={styles.app__description}>
+              {credentials === null
+                ? 'Введите данные инстанса. Они останутся только в памяти текущей вкладки.'
+                : 'Найдите пользователя Telegram по номеру телефона.'}
+            </p>
+          </header>
+        ) : null}
 
         {credentials === null ? (
           <CredentialsForm
@@ -49,17 +57,11 @@ function App() {
             onSubmit={createChat}
           />
         ) : (
-          <div className={styles.app__connected}>
-            <div>
-              <h2 className={styles.app__subtitle}>Чат найден</h2>
-              <p className={styles.app__instance}>
-                +{chat.phoneNumber}, chatId: {chat.chatId}
-              </p>
-            </div>
-            <Button variant="secondary" onClick={disconnect}>
-              Отключиться
-            </Button>
-          </div>
+          <ChatView
+            chat={chat}
+            messages={messages}
+            onDisconnect={disconnect}
+          />
         )}
       </section>
     </main>

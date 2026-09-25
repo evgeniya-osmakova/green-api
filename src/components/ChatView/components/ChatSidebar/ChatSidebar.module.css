@@ -1,0 +1,123 @@
+.chatSidebar {
+  display: grid;
+  min-width: 0;
+  padding: 24px 16px 16px;
+  border-right: 1px solid var(--color-border-subtle);
+  background: var(--color-sidebar);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.chatSidebar__brand {
+  padding: 0 8px 24px;
+}
+
+.chatSidebar__eyebrow {
+  margin: 0 0 4px;
+  color: var(--color-accent);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.chatSidebar__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.chatSidebar__chats {
+  min-height: 0;
+}
+
+.chatSidebar__sectionTitle {
+  margin: 0;
+  padding: 0 8px 8px;
+  color: var(--color-text-subtle);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chatSidebar__chat {
+  display: flex;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 12px;
+  align-items: center;
+  background: var(--color-surface-hover);
+}
+
+.chatSidebar__avatar {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  color: var(--color-surface);
+  background: var(--color-accent);
+  font-weight: 700;
+  place-items: center;
+}
+
+.chatSidebar__identity {
+  min-width: 0;
+  margin-left: 10px;
+}
+
+.chatSidebar__phone,
+.chatSidebar__status {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chatSidebar__phone {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.chatSidebar__status {
+  margin: 4px 0 0;
+  color: var(--color-text-subtle);
+  font-size: 0.75rem;
+}
+
+.chatSidebar__disconnect {
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .chatSidebar {
+    display: flex;
+    gap: 12px;
+    padding: 10px 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border-subtle);
+    align-items: center;
+  }
+
+  .chatSidebar__brand,
+  .chatSidebar__sectionTitle,
+  .chatSidebar__status {
+    display: none;
+  }
+
+  .chatSidebar__chats {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .chatSidebar__chat {
+    padding: 4px;
+    background: transparent;
+  }
+
+  .chatSidebar__disconnect {
+    width: auto;
+    min-height: 40px;
+    padding: 7px 12px;
+  }
+}

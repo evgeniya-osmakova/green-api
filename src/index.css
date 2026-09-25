@@ -4,11 +4,15 @@
   --color-border: #aab8c2;
   --color-border-hover: #748896;
   --color-border-subtle: #d8e1e8;
+  --color-chat-background: #eaf0f4;
   --color-error: #b42318;
   --color-error-surface: #fef3f2;
   --color-focus: rgba(22, 138, 205, 0.22);
   --color-focus-strong: rgba(22, 138, 205, 0.35);
   --color-page: #f4f7f9;
+  --color-message-incoming: #ffffff;
+  --color-message-outgoing: #dff3d2;
+  --color-sidebar: #f8fafb;
   --color-shadow: rgba(23, 33, 43, 0.09);
   --color-surface: #ffffff;
   --color-surface-hover: #f3f6f8;

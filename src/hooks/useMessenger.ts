@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { checkAccount } from '../api/greenApi'
-import type { Chat, Credentials } from '../types/messenger'
+import type { Chat, Credentials, Message } from '../types/messenger'
 import {
   CHECK_ACCOUNT_ERROR_MESSAGE,
   CREDENTIALS_ERROR_MESSAGE,
@@ -10,6 +10,8 @@ import {
   getCheckAccountFailureMessage,
 } from '../utils/errors'
 import { isCheckAccountFailure } from '../utils/typeGuards'
+
+const EMPTY_MESSAGES: Message[] = []
 
 export function useMessenger() {
   const checkAccountController = useRef<AbortController | null>(null)
@@ -102,6 +104,7 @@ export function useMessenger() {
     chatError,
     credentials,
     isChatCreating,
+    messages: EMPTY_MESSAGES,
     clearChatError,
     connect,
     createChat,
