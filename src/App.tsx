@@ -4,12 +4,6 @@ import { ChatSetupForm } from './components/ChatSetupForm/ChatSetupForm'
 import { ChatView } from './components/ChatView/ChatView'
 import { CredentialsForm } from './components/CredentialsForm/CredentialsForm'
 import { useMessenger } from './hooks/useMessenger'
-import type { Credentials } from './types/messenger'
-
-const credentialsPrefill: Credentials = {
-  apiTokenInstance: import.meta.env.VITE_API_TOKEN_INSTANCE ?? '',
-  idInstance: import.meta.env.VITE_ID_INSTANCE ?? '',
-}
 
 function App() {
   const {
@@ -48,10 +42,7 @@ function App() {
         ) : null}
 
         {credentials === null ? (
-          <CredentialsForm
-            initialCredentials={credentialsPrefill}
-            onSubmit={connect}
-          />
+          <CredentialsForm onSubmit={connect} />
         ) : chat === null ? (
           <ChatSetupForm
             error={chatError}

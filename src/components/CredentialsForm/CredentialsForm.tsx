@@ -5,14 +5,9 @@ import { TextField } from '../ui/TextField/TextField'
 import type { CredentialsFormProps } from './CredentialsForm.props'
 import styles from './CredentialsForm.module.css'
 
-export function CredentialsForm({
-  initialCredentials,
-  onSubmit,
-}: CredentialsFormProps) {
-  const [apiTokenInstance, setApiTokenInstance] = useState(
-    initialCredentials.apiTokenInstance,
-  )
-  const [idInstance, setIdInstance] = useState(initialCredentials.idInstance)
+export function CredentialsForm({ onSubmit }: CredentialsFormProps) {
+  const [apiTokenInstance, setApiTokenInstance] = useState('')
+  const [idInstance, setIdInstance] = useState('')
 
   function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
