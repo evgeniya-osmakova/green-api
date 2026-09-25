@@ -1,5 +1,6 @@
 import classNames from 'classnames'
-import type { MessageListProps } from '../../../../types/messenger'
+import { useEffect, useRef } from 'react'
+import type { MessageListProps } from './MessageList.props'
 import styles from './MessageList.module.css'
 
 const timeFormatter = new Intl.DateTimeFormat('ru', {
@@ -8,6 +9,14 @@ const timeFormatter = new Intl.DateTimeFormat('ru', {
 })
 
 export function MessageList({ messages }: MessageListProps) {
+  const listRef = useRef<HTMLOListElement>(null)
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTop = listRef.current.scrollHeight
+    }
+  }, [messages.length])
+
   if (messages.length === 0) {
     return (
       <div aria-live="polite" className={styles.messageList__empty}>
@@ -25,6 +34,7 @@ export function MessageList({ messages }: MessageListProps) {
       aria-label="Сообщения"
       aria-live="polite"
       className={styles.messageList}
+      ref={listRef}
     >
       {messages.map((message) => (
         <li

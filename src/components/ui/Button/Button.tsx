@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import type { ButtonProps } from '../../../types/ui'
+import type { ButtonProps } from './Button.props'
 import styles from './Button.module.css'
 
 export function Button({

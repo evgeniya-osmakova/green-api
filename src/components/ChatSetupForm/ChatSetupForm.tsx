@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { SubmitEvent } from 'react'
-import type { ChatSetupFormProps } from '../../types/messenger'
 import { Button } from '../ui/Button/Button'
 import { TextField } from '../ui/TextField/TextField'
+import type { ChatSetupFormProps } from './ChatSetupForm.props'
 import styles from './ChatSetupForm.module.css'
 
 export function ChatSetupForm({

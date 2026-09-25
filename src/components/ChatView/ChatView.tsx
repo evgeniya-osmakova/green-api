@@ -1,8 +1,8 @@
-import type { ChatViewProps } from '../../types/messenger'
 import { ChatHeader } from './components/ChatHeader/ChatHeader'
 import { ChatSidebar } from './components/ChatSidebar/ChatSidebar'
 import { MessageComposer } from './components/MessageComposer/MessageComposer'
 import { MessageList } from './components/MessageList/MessageList'
+import type { ChatViewProps } from './ChatView.props'
 import styles from './ChatView.module.css'
 
 export function ChatView({

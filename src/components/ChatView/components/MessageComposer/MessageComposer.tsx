@@ -5,8 +5,8 @@ import type {
   KeyboardEvent,
   SubmitEvent,
 } from 'react'
-import type { MessageComposerProps } from '../../../../types/messenger'
 import { Button } from '../../../ui/Button/Button'
+import type { MessageComposerProps } from './MessageComposer.props'
 import styles from './MessageComposer.module.css'
 
 const MAX_MESSAGE_LENGTH = 4096

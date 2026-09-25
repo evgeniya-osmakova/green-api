@@ -1,5 +1,5 @@
-import type { ChatSidebarProps } from '../../../../types/messenger'
 import { Button } from '../../../ui/Button/Button'
+import type { ChatSidebarProps } from './ChatSidebar.props'
 import styles from './ChatSidebar.module.css'
 
 export function ChatSidebar({ phoneNumber, onDisconnect }: ChatSidebarProps) {

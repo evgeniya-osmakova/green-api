@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import type { SubmitEvent } from 'react'
-import type { CredentialsFormProps } from '../../types/messenger'
 import { Button } from '../ui/Button/Button'
 import { TextField } from '../ui/TextField/TextField'
+import type { CredentialsFormProps } from './CredentialsForm.props'
 import styles from './CredentialsForm.module.css'
 
 export function CredentialsForm({

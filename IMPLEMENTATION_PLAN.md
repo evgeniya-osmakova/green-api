@@ -9,7 +9,8 @@
 - Polling, lifecycle, backoff, фильтрация, дедупликация и application state находятся в hooks.
 - Основной orchestration сначала реализуется в `useMessenger`. `useNotificationPolling` добавляется только если `useMessenger` станет слишком большим.
 - `notificationParser.ts` заранее не создаётся. Parsing выносится в чистую функцию вне `api/` только при достаточном объёме логики.
-- Все типы приложения и API централизованы в `src/types/`.
+- Доменные типы приложения и API централизованы в `src/types/`.
+- Типы props хранятся рядом с компонентом в `Component.props.ts`.
 - API-запросы не выполняются из UI-компонентов.
 - Credentials хранятся только в runtime state.
 - Компонент и его CSS Module лежат рядом. В CSS Modules используются BEM-классы.
@@ -31,13 +32,13 @@ src/
 │   └── request.ts
 ├── types/
 │   ├── api.ts
-│   ├── messenger.ts
-│   └── ui.ts
+│   └── messenger.ts
 ├── hooks/
 │   ├── useMessenger.ts
 │   └── useNotificationPolling.ts
 ├── utils/
 │   ├── errors.ts
+│   ├── notifications.ts
 │   └── typeGuards.ts
 └── components/
     ├── ChatSetupForm/
@@ -132,15 +133,15 @@ src/
 
 ## Этап 8. Фильтрация, дедупликация и удаление
 
-- [ ] Принимать только Telegram `incomingMessageReceived` с `textMessage` активного `chatId`.
-- [ ] Преобразовывать подходящее уведомление в `Message`.
-- [ ] Проверять дубли по `chatId + idMessage`.
-- [ ] Удалять подходящие, повторные и проигнорированные уведомления.
-- [ ] Вызывать следующий `ReceiveNotification` только после обработки и `DeleteNotification`.
-- [ ] Не обновлять state после cleanup старого цикла.
-- [ ] При необходимости вынести polling в `useNotificationPolling`.
-- [ ] При необходимости вынести parsing в чистую функцию вне `api/`.
-- [ ] Проверить входящие сообщения, дубли и посторонние события.
+- [x] Принимать только Telegram `incomingMessageReceived` с `textMessage` активного `chatId`.
+- [x] Преобразовывать подходящее уведомление в `Message`.
+- [x] Проверять дубли по `chatId + idMessage`.
+- [x] Удалять подходящие, повторные и проигнорированные уведомления.
+- [x] Вызывать следующий `ReceiveNotification` только после обработки и `DeleteNotification`.
+- [x] Не обновлять state после cleanup старого цикла.
+- [x] При необходимости вынести polling в `useNotificationPolling`.
+- [x] При необходимости вынести parsing в чистую функцию вне `api/`.
+- [x] Проверить входящие сообщения, дубли и посторонние события.
 
 ## Этап 9. Финальная проверка и удаление env-prefill
 

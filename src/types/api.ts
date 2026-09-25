@@ -33,10 +33,12 @@ export type DeleteNotificationResponse = {
   result: boolean
 }
 
-export type ReceiveNotificationResponse = {
+export type Notification = {
   body: unknown
   receiptId: number
-} | null
+}
+
+export type ReceiveNotificationResponse = Notification | null
 
 export type RequestOptions = {
   body?: unknown

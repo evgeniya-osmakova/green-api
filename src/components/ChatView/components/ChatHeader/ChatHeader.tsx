@@ -1,4 +1,4 @@
-import type { ChatHeaderProps } from '../../../../types/messenger'
+import type { ChatHeaderProps } from './ChatHeader.props'
 import styles from './ChatHeader.module.css'
 
 export function ChatHeader({ phoneNumber }: ChatHeaderProps) {

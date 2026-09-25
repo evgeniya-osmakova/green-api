@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { receiveNotification } from '../api/greenApi'
+import { deleteNotification, receiveNotification } from '../api/greenApi'
 import type { NotificationPollingOptions } from '../types/messenger'
 
 const INITIAL_RETRY_DELAY_MS = 1_000
@@ -9,6 +9,7 @@ const RECEIVE_TIMEOUT_SECONDS = 5
 export function useNotificationPolling({
   chatId,
   credentials,
+  onNotification,
 }: NotificationPollingOptions) {
   const apiTokenInstance = credentials?.apiTokenInstance ?? null
   const idInstance = credentials?.idInstance ?? null
@@ -41,17 +42,52 @@ export function useNotificationPolling({
             return
           }
 
-          await wait(getRetryDelay(retryAttempt))
+          await wait(getRetryDelay(retryAttempt), controller.signal)
           retryAttempt += 1
           continue
         }
 
         retryAttempt = 0
 
-        if (result.data !== null) {
+        if (result.data === null) {
+          continue
+        }
+
+        onNotification(result.data)
+
+        if (!isActive || !(await deleteWithRetry(result.data.receiptId))) {
           return
         }
       }
+    }
+
+    async function deleteWithRetry(receiptId: number) {
+      let retryAttempt = 0
+
+      while (isActive && !controller.signal.aborted) {
+        const result = await deleteNotification(
+          pollingCredentials,
+          receiptId,
+          controller.signal,
+        )
+
+        if (!isActive) {
+          return false
+        }
+
+        if (result.status === 'success') {
+          return true
+        }
+
+        if (result.error.type === 'abort') {
+          return false
+        }
+
+        await wait(getRetryDelay(retryAttempt), controller.signal)
+        retryAttempt += 1
+      }
+
+      return false
     }
 
     void pollNotifications()
@@ -60,7 +96,7 @@ export function useNotificationPolling({
       isActive = false
       controller.abort()
     }
-  }, [apiTokenInstance, chatId, idInstance])
+  }, [apiTokenInstance, chatId, idInstance, onNotification])
 }
 
 function getRetryDelay(retryAttempt: number) {
@@ -70,6 +106,21 @@ function getRetryDelay(retryAttempt: number) {
   )
 }
 
-function wait(delay: number) {
-  return new Promise<void>((resolve) => setTimeout(resolve, delay))
+function wait(delay: number, signal: AbortSignal) {
+  return new Promise<void>((resolve) => {
+    if (signal.aborted) {
+      resolve()
+      return
+    }
+
+    const timeoutId = setTimeout(finishWaiting, delay)
+
+    signal.addEventListener('abort', finishWaiting, { once: true })
+
+    function finishWaiting() {
+      clearTimeout(timeoutId)
+      signal.removeEventListener('abort', finishWaiting)
+      resolve()
+    }
+  })
 }

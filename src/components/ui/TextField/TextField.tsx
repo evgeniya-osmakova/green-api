@@ -1,4 +1,4 @@
-import type { TextFieldProps } from '../../../types/ui'
+import type { TextFieldProps } from './TextField.props'
 import styles from './TextField.module.css'
 
 export function TextField({ hint, id, label, ...inputProps }: TextFieldProps) {

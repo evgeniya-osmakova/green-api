@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { checkAccount, sendMessage as sendMessageRequest } from '../api/greenApi'
+import type { Notification } from '../types/api'
 import type { Chat, Credentials, Message } from '../types/messenger'
 import {
   CHECK_ACCOUNT_ERROR_MESSAGE,
@@ -12,6 +13,7 @@ import {
   getApiErrorMessage,
   getCheckAccountFailureMessage,
 } from '../utils/errors'
+import { parseIncomingMessage } from '../utils/notifications'
 import { isCheckAccountFailure } from '../utils/typeGuards'
 import { useNotificationPolling } from './useNotificationPolling'
 
@@ -19,6 +21,7 @@ const MAX_MESSAGE_LENGTH = 4096
 
 export function useMessenger() {
   const checkAccountController = useRef<AbortController | null>(null)
+  const processedMessageKeys = useRef(new Set<string>())
   const sendMessageController = useRef<AbortController | null>(null)
   const [chat, setChat] = useState<Chat | null>(null)
   const [chatError, setChatError] = useState<string | null>(null)
@@ -28,9 +31,36 @@ export function useMessenger() {
   const [messageError, setMessageError] = useState<string | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
 
+  const handleNotification = useCallback(
+    ({ body }: Notification) => {
+      const activeChatId = chat?.chatId
+
+      if (!activeChatId) {
+        return
+      }
+
+      const message = parseIncomingMessage(body, activeChatId)
+
+      if (!message) {
+        return
+      }
+
+      const messageKey = `${activeChatId}:${message.id}`
+
+      if (processedMessageKeys.current.has(messageKey)) {
+        return
+      }
+
+      processedMessageKeys.current.add(messageKey)
+      setMessages((currentMessages) => [...currentMessages, message])
+    },
+    [chat?.chatId],
+  )
+
   useNotificationPolling({
     chatId: chat?.chatId ?? null,
     credentials,
+    onNotification: handleNotification,
   })
 
   useEffect(
@@ -63,6 +93,7 @@ export function useMessenger() {
     setIsMessageSending(false)
     setMessageError(null)
     setMessages([])
+    processedMessageKeys.current.clear()
   }
 
   async function createChat(phoneNumber: string) {
@@ -112,6 +143,7 @@ export function useMessenger() {
       })
       setMessageError(null)
       setMessages([])
+      processedMessageKeys.current.clear()
     }
 
     if (checkAccountController.current === controller) {
@@ -197,6 +229,7 @@ export function useMessenger() {
     setIsMessageSending(false)
     setMessageError(null)
     setMessages([])
+    processedMessageKeys.current.clear()
   }
 
   return {
