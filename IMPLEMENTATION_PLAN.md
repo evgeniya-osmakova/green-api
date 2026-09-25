@@ -3,7 +3,8 @@
 ## Архитектурные ограничения
 
 - `src/api/` содержит только базовые типизированные HTTP-запросы к GREEN-API.
-- `src/api/greenApi.ts` содержит общий `fetch`-wrapper и методы `checkAccount`, `sendMessage`, `receiveNotification`, `deleteNotification`.
+- `src/api/request.ts` содержит только общую HTTP-механику и возвращает структурированную техническую ошибку без текста для UI.
+- `src/api/greenApi.ts` содержит только методы `checkAccount`, `sendMessage`, `receiveNotification`, `deleteNotification` и минимальный URL helper.
 - Polling, lifecycle, backoff, фильтрация, дедупликация и application state находятся в hooks.
 - Основной orchestration сначала реализуется в `useMessenger`. `useNotificationPolling` добавляется только если `useMessenger` станет слишком большим.
 - `notificationParser.ts` заранее не создаётся. Parsing выносится в чистую функцию вне `api/` только при достаточном объёме логики.
@@ -23,7 +24,8 @@ src/
 ├── App.tsx
 ├── App.module.css
 ├── api/
-│   └── greenApi.ts
+│   ├── greenApi.ts
+│   └── request.ts
 ├── types/
 │   ├── api.ts
 │   └── messenger.ts
@@ -48,14 +50,16 @@ src/
 
 ## Этап 2. Централизованные типы и HTTP API
 
-- [ ] Создать `src/types/api.ts` и `src/types/messenger.ts`.
-- [ ] Добавить `Data<T>` и `ApiError`.
-- [ ] Реализовать безопасный типизированный `fetch`-wrapper.
-- [ ] Реализовать `checkAccount`, `sendMessage`, `receiveNotification`, `deleteNotification`.
-- [ ] Обрабатывать ответы как `unknown` через type guards.
-- [ ] Не включать токен и полный URL в ошибки.
-- [ ] Не добавлять polling-логику в `api/`.
-- [ ] Проверить TypeScript, lint и build.
+- [x] Создать `src/types/api.ts` и `src/types/messenger.ts`.
+- [x] Добавить `Data<T>` и `ApiError`.
+- [x] Оставить в `ApiError` только технические данные: тип ошибки и HTTP status, когда он есть.
+- [x] Реализовать безопасный типизированный `request<T>` в `src/api/request.ts`.
+- [x] Реализовать `checkAccount`, `sendMessage`, `receiveNotification`, `deleteNotification`.
+- [x] Использовать generic-типы для обычных ответов и оставить notification body как `unknown`.
+- [x] Не включать токен и полный URL в ошибки.
+- [x] Не формировать в API layer сообщения для UI.
+- [x] Не добавлять polling-логику в `api/`.
+- [x] Проверить TypeScript, lint и build.
 
 ## Этап 3. Credentials и временный env-prefill
 
@@ -72,6 +76,10 @@ src/
 - [ ] Нормализовать телефон до международного формата из цифр.
 - [ ] Вызвать `CheckAccount` и сохранить полученный `chatId`.
 - [ ] Обработать скрытый или несуществующий номер, неавторизованный инстанс, `429`, `469` и сетевые ошибки.
+- [ ] Добавить в `useMessenger` одну функцию преобразования `ApiError` в понятное сообщение с учетом операции.
+- [ ] Различать неверные credentials, ошибку создания/поиска чата, `429`, сетевую и неизвестную ошибку.
+- [ ] Для неизвестной ошибки использовать нейтральное сообщение с предложением повторить запрос.
+- [ ] Не показывать пользователю HTTP status/code.
 - [ ] Не повторять `CheckAccount` автоматически.
 - [ ] Проверить успешный и ошибочные сценарии.
 
@@ -104,6 +112,7 @@ src/
 - [ ] Не использовать `setInterval`.
 - [ ] Управлять запросами через `AbortController`.
 - [ ] Останавливать цикл при отключении, смене credentials, смене чата и unmount.
+- [ ] Не показывать штатный abort при cleanup как пользовательскую ошибку.
 - [ ] Защитить state от обновлений устаревшим циклом минимальным решением вместе с abort/cleanup.
 - [ ] Добавлять отдельный generation id только при доказанной необходимости.
 - [ ] Проверить отсутствие параллельных polling-запросов.
