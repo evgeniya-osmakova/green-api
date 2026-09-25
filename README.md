@@ -2,7 +2,7 @@
 
 Одночатовый веб-клиент для отправки и получения текстовых сообщений Telegram через GREEN-API. Проект написан на React, TypeScript и Vite.
 
-> Telegram API у GREEN-API находится в beta-статусе: поведение методов может меняться или быть нестабильным.
+Демо: https://green-api-six-ebon.vercel.app/
 
 ## Возможности
 
