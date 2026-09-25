@@ -1,9 +1,73 @@
 .app {
   display: grid;
   min-height: 100svh;
+  padding: 24px;
   place-items: center;
+}
+
+.app__panel {
+  width: min(100%, 440px);
+  padding: 32px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 20px;
+  background: var(--color-surface);
+  box-shadow: 0 18px 50px var(--color-shadow);
+}
+
+.app__header {
+  margin-bottom: 28px;
+}
+
+.app__eyebrow {
+  margin: 0 0 6px;
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .app__title {
   margin: 0;
+  font-size: clamp(1.75rem, 6vw, 2.25rem);
+  line-height: 1.15;
+}
+
+.app__description {
+  margin: 12px 0 0;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.app__connected {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app__subtitle {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.app__instance {
+  margin: 8px 0 0;
+  color: var(--color-text-muted);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 520px) {
+  .app {
+    padding: 16px;
+  }
+
+  .app__panel {
+    padding: 24px;
+  }
+
+  .app__connected {
+    align-items: stretch;
+    flex-direction: column;
+  }
 }
