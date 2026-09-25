@@ -34,7 +34,8 @@
   color: var(--color-text);
   background: var(--color-surface);
   line-height: 1.4;
-  resize: vertical;
+  overflow-y: auto;
+  resize: none;
 }
 
 .messageComposer__input:read-only {

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import type {
   ChangeEvent,
   CompositionEvent,
@@ -19,8 +19,20 @@ export function MessageComposer({
   onSubmit,
 }: MessageComposerProps) {
   const lastCompositionEndAt = useRef<number | null>(null)
+  const messageInputRef = useRef<HTMLTextAreaElement>(null)
   const [message, setMessage] = useState('')
   const normalizedMessageLength = message.trim().length
+
+  useLayoutEffect(() => {
+    const messageInput = messageInputRef.current
+
+    if (!messageInput) {
+      return
+    }
+
+    messageInput.style.height = 'auto'
+    messageInput.style.height = `${messageInput.scrollHeight}px`
+  }, [message])
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setMessage(event.target.value)
@@ -82,6 +94,7 @@ export function MessageComposer({
           name="message"
           placeholder="Напишите сообщение"
           readOnly={isSubmitting}
+          ref={messageInputRef}
           rows={1}
           value={message}
           onChange={handleChange}
